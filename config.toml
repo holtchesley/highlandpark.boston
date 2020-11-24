@@ -1,4 +1,4 @@
-baseURL = "http://highlandpark.boston/"
+baseURL = "https://highlandpark.boston/"
 languageCode = "en-us"
 title = "Highland Park, Boston"
 template = "hpboston"
