@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Highland Park, Boston. Map</title>
+        {{ $style := resources.Get "scss/style.scss" | toCSS | minify | fingerprint }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+        <script src="https://cdn.maptiler.com/mapbox-gl-js/v1.5.1/mapbox-gl.js"></script>
+        <script src="https://cdn.maptiler.com/mapbox-gl-leaflet/latest/leaflet-mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+        <link rel="stylesheet" href="https://cdn.maptiler.com/mapbox-gl-js/v1.5.1/mapbox-gl.css" />
+        <link href="{{ $style.Permalink }}" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            {{ partial "menu.html" . }}
+        </header>
+        <main>
+            <div id="map">
+            </div>
+            <script>
+             var hp = {
+                 "type": "FeatureCollection",
+                 "features": [
+                     {
+                         "type": "Feature",
+                         "properties": {},
+                         "geometry": {
+                             "type": "Polygon",
+                             "coordinates": [
+                                 [
+                                     [-71.09467506408691,42.33151948952613],[-71.09604835510254,42.33044080887696],[-71.09664916992188,42.32971110265415],[-71.09755039215088,42.32821993752721],[-71.09793663024902,42.327395022483614],[-71.09823703765869,42.32666528092779],[-71.09845161437988,42.3258403454974],[-71.09875202178955,42.32492021244795],[-71.09896659851074,42.32412698350048],[-71.09883785247803,42.32263568600379],[-71.09827995300293,42.322318384103525],[-71.09682083129883,42.32181069773466],[-71.09609127044678,42.321715506084445],
+                                     [-71.09523296356201,42.32187415875479],[-71.09313011169434,42.320573195048524],[-71.08922481536865,42.32342893375364],[-71.0884952545166,42.32415871285041],[-71.08772277832031,42.32542787372567],[-71.08707904815674,42.326982560905236],[-71.0866928100586,42.32780748135761],[-71.08596324920654,42.32828339208249],[-71.08463287353516,42.32888620716531],[-71.08750820159912,42.33063116562984],[-71.09012603759766,42.331297409728215],[-71.09450340270996,42.33161466634232],[-71.09467506408691,42.33151948952613]
+                                 ]
+                             ]
+                         }
+                     }
+                 ]
+             };
+             var bounds = new L.LatLngBounds(
+                 new L.LatLng(
+                     42.24935997537791, -71.20685577392578),
+                 new L.LatLng(42.414332240033445, -70.94593048095703,));
+
+             var map = L.map('map')
+                        .setView([42.32590, -71.09257], 15)
+                        .setMaxBounds(bounds);
+             var gl = L.mapboxGL({
+                 attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+                 style: 'https://api.maptiler.com/maps/71c4aacb-561f-49a5-b2c9-b08ab8e85aa8/style.json?key=VimUqGTraoGsnvjhvAl6'
+             }).addTo(map);
+
+             L.Mask = L.Polygon.extend({
+	               options: {
+		                 stroke: false,
+		                 color: '#333',
+		                 fillOpacity: 0.5,
+		                 clickable: true,
+                     
+		                 outerBounds: new L.LatLngBounds([-90, -360], [90, 360])
+	               },
+
+	               initialize: function (latLngs, options) {
+                     
+                     var outerBoundsLatLngs = [
+			                   this.options.outerBounds.getSouthWest(),
+			                   this.options.outerBounds.getNorthWest(),
+			                   this.options.outerBounds.getNorthEast(),
+			                   this.options.outerBounds.getSouthEast()
+		                 ];
+                     L.Polygon.prototype.initialize.call(this, [outerBoundsLatLngs, latLngs], options);	
+	               },
+
+             });
+             L.mask = function (latLngs, options) {
+	               return new L.Mask(latLngs, options);
+             };
+
+             var coordinates = hp.features[0].geometry.coordinates[0];
+             var latLngs = [];
+             for (i=0; i<coordinates.length; i++) {
+                 latLngs.push(new L.LatLng(coordinates[i][1], coordinates[i][0]));
+             }
+
+             L.mask(latLngs).addTo(map);
+
+            </script>
+        </main>
+    </body>
+</html>

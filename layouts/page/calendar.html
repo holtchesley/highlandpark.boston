@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Highland Park, Boston. Map</title>
+        {{ $style := resources.Get "scss/style.scss" | toCSS | minify | fingerprint }}
+        <link href="{{ $style.Permalink }}" rel="stylesheet"/>
+        <script src="/js/calendar-links.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css">
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@5.3.1/main.global.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            {{ partial "menu.html" . }}
+        </header>
+        <main>
+            <div id="calendar">
+            </div>
+            <script>
+
+                function getCalendarSize() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                const aspect = w/h;
+                if (aspect > 4/5) {
+                return 'dayGridMonth';
+                }
+                return 'listMonth';
+                }
+                let currentView = getCalendarSize();
+                var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+                plugins: [ FullCalendarGoogleCalendar.default ],
+                googleCalendarApiKey: 'AIzaSyDQdzf-WwQqroRR1hu6E0-1Za831-gg_A0',
+                events: {
+                googleCalendarId: '3fgneau2bp1kebp03hor1qr844@group.calendar.google.com'
+                },
+                initialView: currentView,
+                eventClick: function(info) {
+                info.jsEvent.preventDefault(); // don't let the browser navigate
+                console.log("Clicked");
+                },
+                eventDidMount: function(info) {
+                let event = {
+                name: info.event.title,
+                description: info.event.extendedProps.description,
+                startsAt: info.event.start.toUTCString(),
+                endsAt: info.event.end.toUTCString(),
+                location: info.event.extendedProps.location,
+                url: info.event.url
+                };
+                let eventUrls = window.makeUrls(event);
+                function link(text,url) {return '<a href="'+ url +'">' + text + '</a>';}
+                let content = '<div class="event-popup">' +
+                              '<div><strong>' + event.name + '</strong></div>' +
+                              '<div>' + event.description + '</div>' +
+                              '<div>' + 'Add to ' + [link('Google',eventUrls.google),link('iCal', eventUrls.ics), link('Yahoo', eventUrls.yahoo), link('Outlook', eventUrls.outlook)].join(" ") + '</div>' +
+                              '</div>';
+
+                tippy(info.el, {
+                         content: content,
+                         interactive: true,
+                         allowHTML: true,
+                         theme: 'light-border',
+                         trigger: 'click'
+                });
+                console.log(event);
+                 }
+                });
+
+             calendar.render();
+
+             window.onresize = function(event) {
+                 let currentView = getCalendarSize();
+                 calendar.changeView(currentView)
+             };
+            </script>
+            <div>
+                <p>
+                    You can <a href="https://calendar.google.com/calendar/ical/3fgneau2bp1kebp03hor1qr844%40group.calendar.google.com/public/basic.ics">subscribe to this calendar</a> using your favorite calendaring software.
+                </p>
+                <p>
+                    This calendar is currently maintained by Brennan Chesley. If you would like to add events to it you can send an invitation to <a href="mailto:highlandparkboston@gmail.com">highlandparkboston@gmail.com</a> or email a link for your public calendar to the same address.
+                </p>
+            </div>
+        </main>
+    </body>
+</html>

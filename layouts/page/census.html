@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Highland Park, Boston. Map</title>
+        {{ $style := resources.Get "scss/style.scss" | toCSS | minify | fingerprint }}
+        <link href="{{ $style.Permalink }}" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <script>
+         function revealPhone() {
+             const p3 = "1776";
+             const p2 = "383";
+             const p1 = "502";
+             document.getElementById("phone_number").textContent = p1 + "-" + p2 + "-" + p3;
+         }
+         window.onload = function() {
+             document.getElementById("phone_number").addEventListener("click", revealPhone);
+         }
+        </script>
+    </head>
+    <body>
+        <header>
+            {{ partial "menu.html" . }}
+        </header>
+        <main id="census">
+            <h1>Highland Park Census</h1>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp; Thank you for taking the time to read this, and hopefully answer a few questions. I'm starting a democratic civic organization in the Highland Park neighborhood and I'm trying to figure out what shape it should take, and how it can best help the community. Most civic organizations end up being fairly narrow in focus and participants, so I'm trying to cast a very wide net with this census. I'm not going to sell any information you provide here, and the questions are intended mostly as prompts. If you would rather send me an email (<a href="mailto:highlandparkboston@gmail.com">highlandparkboston@gmail.com</a>), have a conversation over the phone (<a href="#" id="phone_number">Click for my phone number</a>) or zoom (email me to arrange a time), or meet in person (socially distanced, of course) I'd be more than happy to. I would rather have some answers from you than none, you can skip questions or submit another response later if you think of anything you'd like to add.
+            </p>
+            <form name="census" method="POST" data-netlify="true" data-netlify-recaptcha="true" class="census-form">
+                <div>
+                    <p>
+                        I think that it can be very valuable to hear your neighbors opinions, concerns, and hopes. If it's alright with you, I'd like to share with everyone what you share with me.
+                    </p>
+                    <legend class="question-prompt">How can I share your answers?</legend>
+                    <div class="inset">
+                        <label><input name="sharing" type="radio" value="full"/>Share my answers on this website under my name</label>
+                        <label><input name="sharing" type="radio" value="anonymous"/>Share my answers on this website anonymously</label>
+                        <label><input name="sharing" type="radio" value="trends"/>Only share trends and stats from my answers (e.g. 50% of residents commute by public transit, 30% want more parks)</label>
+                        <label><input name="sharing" type="radio" value="dont"/>Do not share my answers in any form</label>
+                        <label><input name="sharing" type="radio" value="other"/>Other</label>
+                        <input name="sharing_other" type="text" value="" class="text-input" />
+                    </div>
+                </div>
+
+                <div>
+                    <label for="name" class="question-prompt">What is your name?</label>
+                    <input name="name" type="text" value="" class="text-input"/>
+                </div>
+                <div>
+                    <label for="residency_length" class="question-prompt">How long have you lived in Highland Park?</label>
+                    <input name="residency_length" type="text" value="" class="text-input"/>
+                </div>
+                <div>
+                    <legend class="question-prompt">Do you rent or own your home?</legend>
+                    <div class="indent">
+                        <label><input name="residency_type" type="radio" value="rent"/>Rent</label>
+                        <label><input name="residency_type" type="radio" value="own"/>Own</label>
+                        <label><input name="residency_type" type="radio" value="other"/>Other</label>
+                    </div>
+                </div>
+                <div>
+                    <legend class="question-prompt">What are your primary modes of transportaion?</legend>
+                    <div class="indent">
+                        <label><input name="transportation" type="checkbox" value="walk"/>Walking</label>
+                        <label><input name="transportation" type="checkbox" value="bike"/>Biking</label>
+                        <label><input name="transportation" type="checkbox" value="bus"/>Public Transit</label>
+                        <label><input name="transportation" type="checkbox" value="car"/>Driving</label>
+                        <label>
+                            Other: <input name="transportation" type="text" value="" class="text-input"/>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label for="improvements" class="question-prompt">
+                        How would you like to see Highland Park improved?
+                    </label>
+                    <textarea cols="30" id="" name="improvements" rows="10"></textarea>
+                    <span class="clarification">This could be anything from more events in parks, to a plan to manage growth, to more meetings with city officials.</span>
+                </div>
+                <div>
+                    <label for="others_know" class="question-prompt">
+                        What would you like other people to know about Highland Park?
+                    </label>
+                    <textarea cols="30" id="" name="others_know" rows="10"></textarea>
+                    <span class="clarification">Maybe you have a story about the history of the neighborhood that you'd like to share, or you volunteer for a charity that's active here, or you know where the turkeys came from.</span>
+                </div>
+                <div>
+                    <label for="others_know" class="question-prompt">
+                        What would you like to ask other people in Highland Park?
+                    </label>
+                    <textarea cols="30" id="" name="others_know" rows="10"></textarea>
+                </div>
+                <div>
+                    <label for="civic" class="question-prompt">
+                        What would you like out of a civic organization?
+                    </label>
+                    <textarea cols="30" id="" name="civic" rows="10"></textarea>
+                    <span class="clarification">This might be things you would like to see in a civic org for the neighborhood, or things you would like to not see.</span>
+                </div>
+                <div>
+                    <label for="contact" class="question-prompt">
+                        Can I contact you to follow up on this census? If so, what's the best way?
+                    </label>
+                    <textarea cols="30" id="" name="contact" rows="10"></textarea>
+                </div>
+                <div>
+                    <label for="extra" class="question-prompt">
+                        Is there anything else you'd like to add?
+                    </label>
+                    <textarea cols="30" id="" name="extra" rows="10"></textarea>
+                </div>
+                <div data-netlify-recaptcha="true">
+                </div>
+                <input name="submit" type="submit" value="Submit"/>
+            </form>
+        </main>
+    </body>
+</html>

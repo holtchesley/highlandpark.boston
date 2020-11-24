@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Highland Park, Boston</title>
+        {{ $style := resources.Get "scss/style.scss" | toCSS | minify | fingerprint }}
+        <link href="{{ $style.Permalink }}" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="homepage-content">
+            {{block "Content" .}}
+            <main class="homepage-body">
+                <div class="homepage-location">
+                    <h1>Highland Park</h1>
+                    <h2>Boston</h2>
+                </div>
+                {{ partial "menu.html" . }}
+            </main>
+            {{end}}
+        </div>
+    </body>
+</html>
