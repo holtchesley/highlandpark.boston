@@ -1,4 +1,4 @@
-baseURL = "http://192.168.86.30:8000/"
+baseURL = "http://highlandpark.boston/"
 languageCode = "en-us"
 title = "Highland Park, Boston"
 template = "hpboston"
