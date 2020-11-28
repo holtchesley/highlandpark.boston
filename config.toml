@@ -2,3 +2,7 @@ baseURL = "https://highlandpark.boston/"
 languageCode = "en-us"
 title = "Highland Park, Boston"
 template = "hpboston"
+
+
+[params]
+  adminEmail = "highlandparkboston@gmail.com"

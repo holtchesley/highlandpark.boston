@@ -1,13 +1,4 @@
-
-@mixin with-size($size) {
-    @if $size == portrait {
-        @media (max-aspect-ratio: 4/5) { @content; }
-    } @else if $size == square {
-        @media (min-aspect-ratio: 4/5) { @content; }
-    } @else if $size == landscape {
-        @media (min-aspect-ratio: 5/4) { @content; }
-    }
-}
+@import "spectre/spectre";
 
 * {
     font-family: 'Roboto', sans-serif;
@@ -26,22 +17,10 @@ body {
     width: 100%;
     overflow: hidden;
 
-    @include with-size(portrait) {
-        background-image: url("/images/portrait/cochituate_background.png");
-        background-position: bottom 50px right 40px;
-        background-repeat: no-repeat;
-        background-size: 100vw auto;
-    }
-    @include with-size(square) {
-        background-image: url("/images/square/public_meeting_house.png");
-        background-position: center;
-        background-size: cover;
-    }
-    @include with-size(landscape) {
-        background-image: url("/images/landscape/fort_hill_jazz.png");
-        background-position: center;
-        background-size: cover;
-    }
+    background-image: url("/images/portrait/cochituate_background.png");
+    background-position: bottom -30px right 0px;
+    background-repeat: no-repeat;
+    background-size: auto 100vh;
 
     .homepage-location {
         h1,h2 {
@@ -51,6 +30,9 @@ body {
     }
     .menu {
         list-style: none;
+        width: fit-content;
+        border-radius: unset;
+        box-shadow: unset;
 
         li a {
             color: black;
@@ -70,8 +52,8 @@ header {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         width: 100%;
-        height: 2vh;
-        padding: 1rem 0 1.25rem 0;
+        height: 7vh;
+        padding: 0.5rem 0 1.25rem 0;
         margin: 0;
 
         justify-items: center;
@@ -93,6 +75,7 @@ main > div {
     margin: 0px auto;
 }
 #calendar {
+    margin-top: 1rem;
     .event-popup {
         div + div {
             margin-top: 10px;
@@ -139,6 +122,9 @@ main > div {
             width:100%;
             height: 2rem;
             font-size: large;
+        }
+        .form-input-hint {
+            color: #404040;
         }
     }
 }
