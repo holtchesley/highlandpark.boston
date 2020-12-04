@@ -32,7 +32,7 @@
             <form name="census" method="POST" data-netlify="true" data-netlify-recaptcha="true" class="census-form">
                 <div>
                     <p>
-                        I think that it can be very valuable to hear your neighbors opinions, concerns, and hopes. If it's alright with you, I'd like to share with everyone what you share with me.
+                        I think that it can be very valuable to hear your neighbors opinions, concerns, and hopes. If it's alright with you, I'd like to share with everyone what you share with me (just the answers to the longer questions, and statistics for the short questions).
                     </p>
                     <div class="form-group">
                         <label class="form-label label-lg"><strong>How can I share your answers?</strong></label>
@@ -64,10 +64,16 @@
                     <label for="name" class="form-label label-lg"><strong>What is your name?</strong></label>
                     <input name="name" type="text" value="" class="form-input"/>
                 </div>
-               
+
                 <div class="form-group">
                     <label for="residency_year" class="form-label label-lg"><strong>What year did you move to Highland Park?</strong></label>
                     <input name="residency_year" type="text" value="" class="form-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="residency_location" class="form-label label-lg"><strong>What street do you live on?</strong></label>
+                    <input name="residency_location" type="text" value="" class="form-input"/>
+                    <span class="form-input-hint">I would like to make sure I'm getting input from all over the neighborhood.</span>
                 </div>
 
                 <div class="form-group">
@@ -85,7 +91,7 @@
                         <i class="form-icon"></i> Other
                     </label>
                 </div>
-                
+
                 <div class="form-group">
                     <legend class="question-prompt label-lg">What are your primary modes of transportaion?</legend>
                     <div class="form-group">
